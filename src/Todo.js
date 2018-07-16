@@ -2,10 +2,24 @@ import React, {Component} from 'react';
 import {Animate} from './Animate/Animate';
 import './styles/Todo.css';
 
+const Icon = ({name, color = 'black'}) => (
+  <i className={`small material-icons ${color}-text`}>{name}</i>
+);
+
 class Todo extends Component {
   render() {
     const {children, item, ...rest} = this.props;
-    return <li {...rest}>{item.body}</li>;
+    return (
+      <div {...rest}>
+        {item.body}
+        <button style={{float: 'right'}}>
+          <Icon name="clear" color="red" />
+        </button>
+        <button style={{float: 'right'}}>
+          <Icon name="check" color="green" />
+        </button>
+      </div>
+    );
   }
 }
 
@@ -63,16 +77,19 @@ class TodoApp extends Component {
           >
             <label>Todo:</label>
             <input type="text" id="newTodo" />
-            <button type="submit">Add</button>
+            <button type="submit">
+              <Icon name="add" />
+            </button>
           </form>
         </Animate>
 
         <h4>To Do Items</h4>
-        <ul className="swing">
+        <div className="item-list swing">
           {this.state.todos.map((todo, i) => {
             return (
               <Animate key={todo.id} hide={todo.done}>
                 <Todo
+                  className="items"
                   onClick={event => {
                     this.removeItem(todo);
                   }}
@@ -81,25 +98,25 @@ class TodoApp extends Component {
               </Animate>
             );
           })}
-        </ul>
+        </div>
 
         <h4>Done Items</h4>
-        <ul className="swing">
+        <div className="list-items swing">
           {this.state.todos.map((todo, i) => {
             //if (todo.done === true) return null;
             return (
               <Animate key={todo.id} hide={!todo.done}>
-                <li
+                <Todo
+                  className="items"
                   onClick={event => {
                     this.removeItem(todo);
                   }}
-                >
-                  {todo.body}
-                </li>
+                  item={todo}
+                />
               </Animate>
             );
           })}
-        </ul>
+        </div>
       </div>
     );
   }

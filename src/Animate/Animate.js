@@ -62,7 +62,7 @@ class Animate extends Component {
   childClass = this.props.children.props.className || '';
 
   componentDidMount() {
-    console.log(this.childClass);
+    //console.log(this.childClass);
     setTimeout(() => this.setState({index: 1, show: !this.props.hide}), 10);
   }
 
