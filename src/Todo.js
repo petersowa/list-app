@@ -1,14 +1,25 @@
 import React, {Component} from 'react';
-import {Animate, AnimateStyle} from './Animate/Animate';
+import {Animate} from './Animate/Animate';
 import './styles/Todo.css';
+
+class Todo extends Component {
+  render() {
+    const {children, item, ...rest} = this.props;
+    return <li {...rest}>{item.body}</li>;
+  }
+}
 
 class TodoApp extends Component {
   state = {
-    todos: [
-      {body: 'go to store', id: Date.now(), done: false},
-      {body: 'buy milk', id: Date.now() + 1, done: true}
-    ]
+    todos: JSON.parse(localStorage.getItem('todos')) || [],
+    formHide: false
   };
+
+  componentDidMount() {}
+
+  componentDidUpdate() {
+    localStorage.setItem('todos', JSON.stringify(this.state.todos));
+  }
 
   removeItem = todo => {
     this.setState({
@@ -24,23 +35,29 @@ class TodoApp extends Component {
   render() {
     return (
       <div className="TodoApp" style={{perspective: '100px'}}>
-        <Animate hide={false}>
+        <Animate hide={this.state.formHide}>
           <form
             onSubmit={event => {
               event.preventDefault();
               const value = event.target.elements.newTodo.value.trim();
 
               if (value === '') return;
-              this.setState({
-                todos: [
-                  {
-                    body: event.target.elements.newTodo.value,
-                    id: Date.now(),
-                    done: false
-                  },
-                  ...this.state.todos
-                ]
-              });
+              this.setState(
+                {
+                  todos: [
+                    {
+                      body: event.target.elements.newTodo.value,
+                      id: Date.now(),
+                      done: false
+                    },
+                    ...this.state.todos
+                  ],
+                  formHide: true
+                },
+                () => {
+                  setTimeout(() => this.setState({formHide: false}), 100);
+                }
+              );
               event.target.elements.newTodo.value = '';
             }}
           >
@@ -55,13 +72,12 @@ class TodoApp extends Component {
           {this.state.todos.map((todo, i) => {
             return (
               <Animate key={todo.id} hide={todo.done}>
-                <li
+                <Todo
                   onClick={event => {
                     this.removeItem(todo);
                   }}
-                >
-                  {todo.body}
-                </li>
+                  item={todo}
+                />
               </Animate>
             );
           })}

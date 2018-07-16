@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './styles/App.css';
 import {Animate} from './Animate/Animate';
 
@@ -14,9 +13,6 @@ class App extends Component {
             <span className="App-title">A Todo List</span>
           </header>
         </Animate>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
         <TodoApp />
       </div>
     );
