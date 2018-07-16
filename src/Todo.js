@@ -127,7 +127,7 @@ class TodoApp extends Component {
         </div>
 
         <h4>Done Items</h4>
-        <div className="list-items fade">
+        <div className="item-list fade">
           {this.state.todos.map((todo, i) => {
             //if (todo.done === true) return null;
             return (
