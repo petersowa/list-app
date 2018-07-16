@@ -21,6 +21,19 @@
   vertical-align: middle;
 }
 
+.App-header {
+  opacity: 0;
+  transform: rotateY(-90deg);
+  transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
+}
+
+.App-header.show {
+  opacity: 1;
+  line-height: 1.5rem;
+  transform: none;
+  transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
+}
+
 .App-title {
   font-size: 1.5rem;
 }
@@ -40,17 +53,4 @@
 
 .swing {
   perspective: 100px;
-}
-
-.swing header {
-  opacity: 0;
-  transform: rotateY(-90deg);
-  transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
-}
-
-.swing header.show {
-  opacity: 1;
-  line-height: 1.5rem;
-  transform: none;
-  transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
 }
