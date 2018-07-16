@@ -2,19 +2,6 @@ import React, {Component} from 'react';
 import {Animate, AnimateStyle} from './Animate/Animate';
 import './styles/Todo.css';
 
-const inStyle = {
-  transition: 'all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76)',
-  lineHeight: '1.5rem',
-  opacity: '1',
-  transform: 'none'
-};
-
-const outStyle = {
-  transform: 'rotateY(-90deg)',
-  transition: 'all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76)',
-  opacity: '0'
-};
-
 class TodoApp extends Component {
   state = {
     todos: [
@@ -37,7 +24,7 @@ class TodoApp extends Component {
   render() {
     return (
       <div className="TodoApp" style={{perspective: '100px'}}>
-        <AnimateStyle hide={false} in={inStyle} out={outStyle}>
+        <Animate hide={false}>
           <form
             onSubmit={event => {
               event.preventDefault();
@@ -61,27 +48,21 @@ class TodoApp extends Component {
             <input type="text" id="newTodo" />
             <button type="submit">Add</button>
           </form>
-        </AnimateStyle>
+        </Animate>
 
         <h4>To Do Items</h4>
         <ul className="swing">
           {this.state.todos.map((todo, i) => {
             return (
-              <AnimateStyle
-                key={todo.id}
-                hide={todo.done}
-                in={inStyle}
-                out={outStyle}
-              >
+              <Animate key={todo.id} hide={todo.done}>
                 <li
-                  className="test"
                   onClick={event => {
                     this.removeItem(todo);
                   }}
                 >
                   {todo.body}
                 </li>
-              </AnimateStyle>
+              </Animate>
             );
           })}
         </ul>
@@ -93,7 +74,6 @@ class TodoApp extends Component {
             return (
               <Animate key={todo.id} hide={!todo.done}>
                 <li
-                  className="test"
                   onClick={event => {
                     this.removeItem(todo);
                   }}
