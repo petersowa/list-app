@@ -55,8 +55,11 @@ class Animate extends Component {
   state = {
     index: 0,
     stage: ['', 'show'],
-    show: true
+    show: true,
+    className: null
   };
+
+  childClass = this.props.children.props.className;
 
   componentDidMount() {
     setTimeout(() => this.setState({index: 1, show: !this.props.hide}), 10);
@@ -89,7 +92,7 @@ class Animate extends Component {
       props: {
         ...props,
         onTransitionEnd: this.onTransitionEnd,
-        className: this.state.stage[this.state.index]
+        className: `${this.childClass} ${this.state.stage[this.state.index]}`
       }
     };
   }
