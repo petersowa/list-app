@@ -35,19 +35,16 @@ button:hover {
   list-style: none;
   background: rgb(44, 65, 104);
   color: #fff;
-  line-height: 0px;
   padding: 0 0.5rem;
   overflow: hidden;
   margin: 8px auto;
   max-width: 40rem;
   border-radius: 5px;
   box-shadow: 5px 10px 18px #888888;
-  transition: all 0.5s var(--transition-args);
 }
 
-.items:hover {
+.fade .items.show:hover {
   filter: brightness(150%);
-  transform: rotateZ(30deg);
 }
 
 form {
@@ -60,7 +57,6 @@ form {
 }
 
 form {
-  transform: rotateY(-90deg);
   transition: all 0.5s var(--transition-args);
   opacity: 0;
 }
@@ -73,12 +69,14 @@ form.show {
 }
 
 .fade .items {
+  height: 0;
   transition: all 0.4s ease;
   opacity: 0;
 }
 
 .fade .items.show {
   line-height: 1.5rem;
+  height: 100%;
   opacity: 1;
   transform: none;
   transition: all 0.4s ease;
@@ -88,13 +86,13 @@ form.show {
   perspective: 100px;
 }
 
-.swing .items {
+.swing.items {
   opacity: 0;
   transform: rotateY(-90deg);
   transition: all 0.5s var(--transition-args);
 }
 
-.swing .items.show {
+.swing.items.show {
   opacity: 1;
   line-height: 1.5rem;
   transform: none;
@@ -103,5 +101,5 @@ form.show {
 
 .items.show:hover {
   transition: all 0.5s var(--transition-args);
-  transform: translate3d(0, 0, 5px);
+  filter: brightness(120%);
 }

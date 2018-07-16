@@ -8,14 +8,14 @@ const Icon = ({name, color = 'black'}) => (
 
 class Todo extends Component {
   render() {
-    const {children, item, ...rest} = this.props;
+    const {children, item, onDelete, onToggle, ...rest} = this.props;
     return (
       <div {...rest}>
         {item.body}
-        <button style={{float: 'right'}}>
+        <button onClick={onDelete} style={{float: 'right'}}>
           <Icon name="clear" color="red" />
         </button>
-        <button style={{float: 'right'}}>
+        <button onClick={onToggle} style={{float: 'right'}}>
           <Icon name="check" color="green" />
         </button>
       </div>
@@ -26,7 +26,8 @@ class Todo extends Component {
 class TodoApp extends Component {
   state = {
     todos: JSON.parse(localStorage.getItem('todos')) || [],
-    formHide: false
+    formHide: false,
+    fadeOut: null
   };
 
   componentDidMount() {}
@@ -46,9 +47,28 @@ class TodoApp extends Component {
     });
   };
 
+  deleteItem = todo => {
+    this.setState({fadeOut: todo.id}, () => {
+      setTimeout(() => {
+        console.log('done', todo);
+        this.setState({
+          todos: [...this.state.todos.filter(e => e.id !== todo.id)]
+        });
+      }, 200);
+    });
+  };
+
+  /* , () =>
+      setTimeout(
+        this.setState({
+          todos: [...this.state.todos.filter(e => e.id !== todo.id)]
+        }),
+        5000
+      ) */
+
   render() {
     return (
-      <div className="TodoApp" style={{perspective: '100px'}}>
+      <div className="TodoApp fade">
         <Animate hide={this.state.formHide}>
           <form
             onSubmit={event => {
@@ -84,13 +104,19 @@ class TodoApp extends Component {
         </Animate>
 
         <h4>To Do Items</h4>
-        <div className="item-list swing">
+        <div className="item-list fade">
           {this.state.todos.map((todo, i) => {
             return (
-              <Animate key={todo.id} hide={todo.done}>
+              <Animate
+                key={todo.id}
+                hide={todo.done || todo.id === this.state.fadeOut}
+              >
                 <Todo
                   className="items"
-                  onClick={event => {
+                  onDelete={event => {
+                    this.deleteItem(todo);
+                  }}
+                  onToggle={event => {
                     this.removeItem(todo);
                   }}
                   item={todo}
@@ -101,14 +127,20 @@ class TodoApp extends Component {
         </div>
 
         <h4>Done Items</h4>
-        <div className="list-items swing">
+        <div className="list-items fade">
           {this.state.todos.map((todo, i) => {
             //if (todo.done === true) return null;
             return (
-              <Animate key={todo.id} hide={!todo.done}>
+              <Animate
+                key={todo.id}
+                hide={!todo.done || todo.id === this.state.fadeOut}
+              >
                 <Todo
                   className="items"
-                  onClick={event => {
+                  onDelete={event => {
+                    this.deleteItem(todo);
+                  }}
+                  onToggle={event => {
                     this.removeItem(todo);
                   }}
                   item={todo}
