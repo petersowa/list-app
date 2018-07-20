@@ -7,7 +7,7 @@ import TodoApp from './Todo';
 class App extends Component {
   render() {
     return (
-      <div className="App swing">
+      <div className="App fade">
         <Animate hide={false}>
           <header className="App-header">
             <span className="App-title">A Todo List</span>

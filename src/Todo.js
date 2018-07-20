@@ -50,11 +50,11 @@ class TodoApp extends Component {
   deleteItem = todo => {
     this.setState({fadeOut: todo.id}, () => {
       setTimeout(() => {
-        console.log('done', todo);
+        //console.log('done', todo);
         this.setState({
           todos: [...this.state.todos.filter(e => e.id !== todo.id)]
         });
-      }, 200);
+      }, 400);
     });
   };
 
@@ -68,9 +68,10 @@ class TodoApp extends Component {
 
   render() {
     return (
-      <div className="TodoApp fade">
+      <div className="TodoApp">
         <Animate hide={this.state.formHide}>
           <form
+            className="todo-form"
             onSubmit={event => {
               event.preventDefault();
               const value = event.target.elements.newTodo.value.trim();
@@ -103,51 +104,53 @@ class TodoApp extends Component {
           </form>
         </Animate>
 
-        <h4>To Do Items</h4>
-        <div className="item-list fade">
-          {this.state.todos.map((todo, i) => {
-            return (
-              <Animate
-                key={todo.id}
-                hide={todo.done || todo.id === this.state.fadeOut}
-              >
-                <Todo
-                  className="items"
-                  onDelete={event => {
-                    this.deleteItem(todo);
-                  }}
-                  onToggle={event => {
-                    this.removeItem(todo);
-                  }}
-                  item={todo}
-                />
-              </Animate>
-            );
-          })}
-        </div>
+        <div className="Lists">
+          <h4>To Do Items</h4>
+          <div className="item-list swing">
+            {this.state.todos.map((todo, i) => {
+              return (
+                <Animate
+                  key={todo.id}
+                  hide={todo.done || todo.id === this.state.fadeOut}
+                >
+                  <Todo
+                    className="items"
+                    onDelete={event => {
+                      this.deleteItem(todo);
+                    }}
+                    onToggle={event => {
+                      this.removeItem(todo);
+                    }}
+                    item={todo}
+                  />
+                </Animate>
+              );
+            })}
+          </div>
 
-        <h4>Done Items</h4>
-        <div className="item-list fade">
-          {this.state.todos.map((todo, i) => {
-            //if (todo.done === true) return null;
-            return (
-              <Animate
-                key={todo.id}
-                hide={!todo.done || todo.id === this.state.fadeOut}
-              >
-                <Todo
-                  className="items"
-                  onDelete={event => {
-                    this.deleteItem(todo);
-                  }}
-                  onToggle={event => {
-                    this.removeItem(todo);
-                  }}
-                  item={todo}
-                />
-              </Animate>
-            );
-          })}
+          <h4>Done Items</h4>
+          <div className="item-list swing">
+            {this.state.todos.map((todo, i) => {
+              //if (todo.done === true) return null;
+              return (
+                <Animate
+                  key={todo.id}
+                  hide={!todo.done || todo.id === this.state.fadeOut}
+                >
+                  <Todo
+                    className="items"
+                    onDelete={event => {
+                      this.deleteItem(todo);
+                    }}
+                    onToggle={event => {
+                      this.removeItem(todo);
+                    }}
+                    item={todo}
+                  />
+                </Animate>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
