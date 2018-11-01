@@ -58,9 +58,7 @@ button:hover {
 
 .items.show:hover {
   transition: all 0.5s var(--transition-args);
-  transform: none;
   filter: brightness(120%);
-  z-index: 2;
 }
 
 form {
@@ -70,9 +68,6 @@ form {
   padding: 1rem;
   border-radius: 5px;
   box-shadow: 5px 10px 18px #888888;
-}
-
-form {
   transform: rotateZ(90deg);
   transition: all 0.5s var(--transition-args);
   opacity: 0;

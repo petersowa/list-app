@@ -11,7 +11,7 @@ class Animate extends Component {
   childClass = this.props.children.props.className || '';
 
   componentDidMount() {
-    console.log(this.childClass);
+    //console.log(this.childClass);
     setTimeout(() => this.setState({index: 1, show: !this.props.hide}), 10);
   }
 
@@ -29,10 +29,11 @@ class Animate extends Component {
   }
 
   onTransitionEnd = event => {
-    console.log('transition end', this.props, event.propertyName);
-    if (event.propertyName !== 'opacity') return;
-    if (this.props.hide) this.setState({show: false});
-    if (!this.props.hide) this.setState({show: true});
+    //console.log('transition end', this.props, event.propertyName);
+    if (event.propertyName === 'opacity') {
+      if (this.props.hide) this.setState({show: false});
+      if (!this.props.hide) this.setState({show: true});
+    }
   };
 
   render() {
